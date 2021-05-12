@@ -11,17 +11,17 @@ language: nodeJS
 -->
 ## Serverless REST API
 
-Integración con DynamoDB - Base de datos de clientes
-Integración con servicios externos SWAPI - https://swapi.py4e.com/ 
+- Integración con DynamoDB - Base de datos de clientes
+- Integración con servicios externos SWAPI - https://swapi.py4e.com/ 
 
 ## Setup
 
 Pasos para la instalación:
 
-Paso #1 
-npm install serverless -g
-Paso #2 
-serverless install -u https://github.com/niltonmr/reto_rimac.git -n reto-rimac
+- Paso #1 
+  - npm install serverless -g
+- Paso #2 
+  - serverless install -u https://github.com/niltonmr/reto_rimac.git -n reto-rimac
 
 ## Deploy
 
