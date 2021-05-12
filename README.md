@@ -91,7 +91,7 @@ Pasos para la instalación:
 -  Tipo: POST
 -  Endpoint: https://pxn6ss8xbd.execute-api.us-east-1.amazonaws.com/dev/api/putclient
 -  Ejemplo: https://pxn6ss8xbd.execute-api.us-east-1.amazonaws.com/dev/api/putclient
-            body en formato JSON:
+    - body en formato JSON:
                 {
                 "dni": "10102020",
                 "name": "Juanito",
