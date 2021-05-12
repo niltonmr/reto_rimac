@@ -1,4 +1,4 @@
-# reto_rimac
+# RETO
 
 <!--
 title: 'APIs - Integración SWAPI - DYNAMODB'
@@ -26,15 +26,15 @@ Pasos para la instalación:
 ## Deploy
 
 - Paso #1
-    Ubicarse en el directorio del proyecto y abrir la consola para comandos en línea (PowerShell)
+  -  Ubicarse en el directorio del proyecto y abrir la consola para comandos en línea (PowerShell)
 
 - Paso #2
-    Desde el puntero de comandos ejecutar el siguiente comando:
-      serverless deploy
+  -  Desde el puntero de comandos ejecutar el siguiente comando:
+      - serverless deploy
 
 - Paso #2 (Alternativo)
-    Desde el puntero de comandos ejecutar el siguiente comando:
-      yarn deploy
+  -  Desde el puntero de comandos ejecutar el siguiente comando:
+      - yarn deploy
 ## Endpoints
 
 - Servicios de consulta a SWAPI:
