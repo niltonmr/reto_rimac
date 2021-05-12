@@ -49,7 +49,7 @@ Pasos para la instalación:
 
 
 ### Uso
-#### CONSULTAS SOBRE LA SAGA STAR WAR:
+- CONSULTAS SOBRE LA SAGA STAR WAR:
   - Puede consultar detalles todas de los personajes de la saga Star War
       - GET - https://pxn6ss8xbd.execute-api.us-east-1.amazonaws.com/dev/api/people
   - Puede consultar detalles un personaje en particular de la saga Star War
@@ -59,7 +59,7 @@ Pasos para la instalación:
   - Puede consultar detalles un vehiculo en particular de la saga Star War
       - GET - https://pxn6ss8xbd.execute-api.us-east-1.amazonaws.com/dev/api/vehicle/{id}
 
-#### REGISTRO Y CONSULTA A LA BASE DE DATOS CLIENTES:
+- REGISTRO Y CONSULTA A LA BASE DE DATOS CLIENTES:
   - Puede registrar clientes en la base de datos 
       - POST - https://pxn6ss8xbd.execute-api.us-east-1.amazonaws.com/dev/api/putclient
   - Puede consultar detalles de un cliente en particular a traves de su identificador
