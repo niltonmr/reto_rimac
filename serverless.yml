@@ -6,15 +6,92 @@ provider:
   name: aws
   runtime: nodejs12.x
   stage: dev
+  profile: deploy-aws
   region: us-east-1
   lambdaHashingVersion: 20201221
+  environment:
+    CLIENT_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+
+  iam:
+    role:
+      statements:  
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+      
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CLIENT_TABLE}"
+
+
 
 functions:
-  hello:
-    handler: handler.hello
+  onePeople:
+    handler: api/swapi.getOnePeople
     events:
       - http:
           method: get
-          path: /helloWorld
-          
+          path: /api/people/{id}
+          cors: true
+
+  allPeople:
+    handler: api/swapi.getAllPeople
+    events:
+      - http:
+          method: get
+          path: /api/people
+          cors: true
+
+  oneVehicle:
+    handler: api/swapi.getOneVehicle
+    events:
+      - http:
+          method: get
+          path: /api/vehicle/{id}
+          cors: true
+
+  allVehicles:
+    handler: api/swapi.getAllVehicles
+    events:
+      - http:
+          method: get
+          path: /api/vehicles
+          cors: true
+
+  putClient:
+    handler: api/cliapi.putClient
+    events:
+      - http:
+          path: /api/putclient
+          method: post
+          cors: true
+
+  getClient:
+    handler: api/cliapi.getClient
+    events:
+      - http:
+          path: /api/getClient/{id}
+          method: get
+          cors: true
+
+
+custom:
+  tableName: clients
+resources:
+  Resources:
+    RimacDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:provider.environment.CLIENT_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 
