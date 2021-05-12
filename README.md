@@ -94,11 +94,11 @@ Pasos para la instalación:
     - body en formato JSON:
                 {
                 "dni": "10102020",
-                "name": "Juanito",
-                "lastName": "Alimaña",
+                "name": "Juan",
+                "lastName": "Perez",
                 "address": "Los Moches 138",
-                "birthday": "28/2/2019",
-                "salary": "15000"
+                "birthday": "20/1/1990",
+                "salary": "7000"
                 }
 
 ### Consultar detalles de un cliente en particular
