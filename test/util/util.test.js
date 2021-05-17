@@ -40,7 +40,39 @@ describe('Verificacion de fechas', () => {
         expect(formatDate('01/09/01992')).toBe("Fecha invalida");
     });
 
+    test('Verificando fo el traductor', async () => {
+        let de = JSON.stringify(await translateAtributes({ count: "valor" }));
+        let aa = JSON.stringify({ contar: "valor" });
+        expect(de).toEqual(aa);
+        expect(JSON.stringify(await translateAtributes({ count: "valor" }))).toEqual(JSON.stringify({ contar: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ next: "valor" }))).toEqual(JSON.stringify({ siguiente: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ previous: "valor" }))).toEqual(JSON.stringify({ anterior: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ height: "valor" }))).toEqual(JSON.stringify({ altura: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ mass: "valor" }))).toEqual(JSON.stringify({ masa: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ hair_color: "valor" }))).toEqual(JSON.stringify({ color_de_pelo: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ skin_color: "valor" }))).toEqual(JSON.stringify({ color_de_piel: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ eye_color: "valor" }))).toEqual(JSON.stringify({ color_de_ojos: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ birth_year: "valor" }))).toEqual(JSON.stringify({ año_de_nacimiento: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ gender: "valor" }))).toEqual(JSON.stringify({ género: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ homeworld: "valor" }))).toEqual(JSON.stringify({ mundo_natal: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ species: "valor" }))).toEqual(JSON.stringify({ especies: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ vehicles: "valor" }))).toEqual(JSON.stringify({ vehiculos: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ starships: "valor" }))).toEqual(JSON.stringify({ naves_estelares: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ created: "valor" }))).toEqual(JSON.stringify({ creado: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ edited: "valor" }))).toEqual(JSON.stringify({ editado: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ model: "valor" }))).toEqual(JSON.stringify({ modelo: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ manufacturer: "valor" }))).toEqual(JSON.stringify({ fabricante: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ cost_in_credits: "valor" }))).toEqual(JSON.stringify({ costo_en_créditos: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ passengers: "valor" }))).toEqual(JSON.stringify({ pasajeros: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ cargo_capacity: "valor" }))).toEqual(JSON.stringify({ Capacidad_de_carga: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ consumables: "valor" }))).toEqual(JSON.stringify({ consumibles: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ vehicle_class: "valor" }))).toEqual(JSON.stringify({ clase_vehículo: "valor" }));
+        expect(JSON.stringify(await translateAtributes({ pilots: "valor" }))).toEqual(JSON.stringify({ pilotos: "valor" }));
 
+
+
+    });
 
 
 })
+
