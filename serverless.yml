@@ -17,18 +17,35 @@ provider:
       statements:  
         - Effect: Allow
           Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-      
-          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CLIENT_TABLE}"
+            - dynamodb:*
+            - s3:*
+            - ses:*
+          Resource: '*'
 
+plugins:
+    - serverless-webpack
+    - serverless-offline
+    - serverless-dynamodb-local
 
+package:
+    individually: true
+
+custom:
+    tableName: abcde
+    bucketName: reto-rimac-devserverlessprojectuploadbucket
+    dynamodb:
+        stages:
+            - dev
+        start:
+            port: 8000
+            inMemory: true
+            migrate: true
+        migration:
+            dir: offline/migrations
 
 functions:
   onePeople:
-    handler: api/swapi.getOnePeople
+    handler: api/swapi/swapi.getOnePeople
     events:
       - http:
           method: get
@@ -36,7 +53,7 @@ functions:
           cors: true
 
   allPeople:
-    handler: api/swapi.getAllPeople
+    handler: api/swapi/swapi.getAllPeople
     events:
       - http:
           method: get
@@ -44,7 +61,7 @@ functions:
           cors: true
 
   oneVehicle:
-    handler: api/swapi.getOneVehicle
+    handler: api/swapi/swapi.getOneVehicle
     events:
       - http:
           method: get
@@ -52,7 +69,7 @@ functions:
           cors: true
 
   allVehicles:
-    handler: api/swapi.getAllVehicles
+    handler: api/swapi/swapi.getAllVehicles
     events:
       - http:
           method: get
@@ -60,7 +77,7 @@ functions:
           cors: true
 
   putClient:
-    handler: api/cliapi.putClient
+    handler: api/dynamodb/cliapi.putClient
     events:
       - http:
           path: /api/putclient
@@ -68,7 +85,7 @@ functions:
           cors: true
 
   getClient:
-    handler: api/cliapi.getClient
+    handler: api/dynamodb/cliapi.getClient
     events:
       - http:
           path: /api/getClient/{id}
@@ -76,14 +93,16 @@ functions:
           cors: true
 
 
-custom:
-  tableName: clients
 resources:
   Resources:
-    RimacDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
       Properties:
-        TableName: ${self:provider.environment.CLIENT_TABLE}
+        BucketName: ${self:custom.bucketName}
+    MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S

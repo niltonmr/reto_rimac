@@ -71,12 +71,6 @@
         }
       }
     },
-    "HelloLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/reto-rimac-dev-hello"
-      }
-    },
     "OnePeopleLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
@@ -173,12 +167,11 @@
                 {
                   "Effect": "Allow",
                   "Action": [
-                    "dynamodb:Query",
-                    "dynamodb:Scan",
-                    "dynamodb:GetItem",
-                    "dynamodb:PutItem"
+                    "dynamodb:*",
+                    "s3:*",
+                    "ses:*"
                   ],
-                  "Resource": "arn:aws:dynamodb:us-east-1:*:table/reto-rimac-dev"
+                  "Resource": "*"
                 }
               ]
             }
@@ -200,36 +193,6 @@
         }
       }
     },
-    "HelloLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
-        },
-        "Handler": "api/handler.hello",
-        "Runtime": "nodejs12.x",
-        "FunctionName": "reto-rimac-dev-hello",
-        "MemorySize": 1024,
-        "Timeout": 6,
-        "Environment": {
-          "Variables": {
-            "CLIENT_TABLE": "reto-rimac-dev"
-          }
-        },
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
-      },
-      "DependsOn": [
-        "HelloLogGroup"
-      ]
-    },
     "OnePeopleLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -237,9 +200,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/onePeople.zip"
         },
-        "Handler": "api/swapi.getOnePeople",
+        "Handler": "api/swapi/swapi.getOnePeople",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-onePeople",
         "MemorySize": 1024,
@@ -267,9 +230,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/allPeople.zip"
         },
-        "Handler": "api/swapi.getAllPeople",
+        "Handler": "api/swapi/swapi.getAllPeople",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-allPeople",
         "MemorySize": 1024,
@@ -297,9 +260,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/oneVehicle.zip"
         },
-        "Handler": "api/swapi.getOneVehicle",
+        "Handler": "api/swapi/swapi.getOneVehicle",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-oneVehicle",
         "MemorySize": 1024,
@@ -327,9 +290,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/allVehicles.zip"
         },
-        "Handler": "api/swapi.getAllVehicles",
+        "Handler": "api/swapi/swapi.getAllVehicles",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-allVehicles",
         "MemorySize": 1024,
@@ -357,9 +320,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/putClient.zip"
         },
-        "Handler": "api/cliapi.putClient",
+        "Handler": "api/dynamodb/cliapi.putClient",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-putClient",
         "MemorySize": 1024,
@@ -387,9 +350,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/reto-rimac/dev/1620815424519-2021-05-12T10:30:24.519Z/reto-rimac.zip"
+          "S3Key": "serverless/reto-rimac/dev/1621243380209-2021-05-17T09:23:00.209Z/getClient.zip"
         },
-        "Handler": "api/cliapi.getClient",
+        "Handler": "api/dynamodb/cliapi.getClient",
         "Runtime": "nodejs12.x",
         "FunctionName": "reto-rimac-dev-getClient",
         "MemorySize": 1024,
@@ -410,74 +373,64 @@
         "GetClientLogGroup"
       ]
     },
-    "HelloLambdaVersionnCxjtp2X7hox6YyCq5NHQGcXulFjuPLcEiGrK07U0": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "HelloLambdaFunction"
-        },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
-      }
-    },
-    "OnePeopleLambdaVersion9WeGdTq87OaCj9ItoByemVG9S7Tf45QfPT5mXBPo4": {
+    "OnePeopleLambdaVersion4y1ZE8rVkQELU4jtvt9rGHvziH3pIF8CY6kHjgiC8A": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "OnePeopleLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "vgrHQqPQ8GQ30vg3aJSVUlp/9V25pQVzSoeu4jFURn0="
       }
     },
-    "AllPeopleLambdaVersionanqv0o28SppHOWEuRvKdaRsMxKzRYXC4d310tjvVUo": {
+    "AllPeopleLambdaVersion0faxIiejuv23Gz54cp0WRVBhnQnbtX9TgVGUtjsNR7g": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AllPeopleLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "sTPABnXbqpXEdCgZq4cojXpbWc4UCteBdspj6g5ZucI="
       }
     },
-    "OneVehicleLambdaVersionfzEIewVNcQDUy0fvUrzAaTaUvQpeaO8GpqcrC92xcQ": {
+    "OneVehicleLambdaVersionu7qDWevlsEmKLtK7LWG0lqLBlHfnv3XVJejMZOk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "OneVehicleLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "sTPABnXbqpXEdCgZq4cojXpbWc4UCteBdspj6g5ZucI="
       }
     },
-    "AllVehiclesLambdaVersionBSmnaFNFCL853h6tACpHBRXijEd0FhB9ZM2ogGk8s8E": {
+    "AllVehiclesLambdaVersionsJfuF6bPVywlhZ2b9ShCNJm66wSMsPu0aykwmjft3k": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AllVehiclesLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "sTPABnXbqpXEdCgZq4cojXpbWc4UCteBdspj6g5ZucI="
       }
     },
-    "PutClientLambdaVersionrM7FpO8fBTXpXnwQT8Eqg72qqv3Cyj2yZgT2AYBcJs": {
+    "PutClientLambdaVersionmm8SKRVwzAbLrR4ZheXlfRIYjkBfIKO0kX1zYwNE8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PutClientLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "fDhmU6i9YB9Hqd4grSbJycKXnk3qkII344AnRSdEaJI="
       }
     },
-    "GetClientLambdaVersionIJwGOIDNXK9dtFeuSqquSzDz5z4SWYa3AKV05AYHs": {
+    "GetClientLambdaVersionKZvomgKsLv7sESXOiZCYbfkDnbdVBQSkHR7UHP7228U": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetClientLambdaFunction"
         },
-        "CodeSha256": "e+VvMrSYkIHXKiQh0Vwu+lTLwjpV2dUtTf4aBjsHYN8="
+        "CodeSha256": "9rHSk7A8nla6cFYpiNdm3zbqQx7nXHGRlqyasf72ZSM="
       }
     },
     "ApiGatewayRestApi": {
@@ -502,18 +455,6 @@
           ]
         },
         "PathPart": "api",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceApiHellorimac": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceApi"
-        },
-        "PathPart": "helloRimac",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -885,49 +826,6 @@
         }
       }
     },
-    "ApiGatewayMethodApiHellorimacGet": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "GET",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceApiHellorimac"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "HelloLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
     "ApiGatewayMethodApiPeopleIdVarGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -1186,7 +1084,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1620815417028": {
+    "ApiGatewayDeployment1621243356270": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1201,7 +1099,6 @@
         "ApiGatewayMethodApiVehiclesOptions",
         "ApiGatewayMethodApiPutclientOptions",
         "ApiGatewayMethodApiGetclientIdVarOptions",
-        "ApiGatewayMethodApiHellorimacGet",
         "ApiGatewayMethodApiPeopleIdVarGet",
         "ApiGatewayMethodApiPeopleGet",
         "ApiGatewayMethodApiVehicleIdVarGet",
@@ -1209,43 +1106,6 @@
         "ApiGatewayMethodApiPutclientPost",
         "ApiGatewayMethodApiGetclientIdVarGet"
       ]
-    },
-    "HelloLambdaPermissionApiGateway": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "HelloLambdaFunction",
-            "Arn"
-          ]
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition"
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "/*/*"
-            ]
-          ]
-        }
-      }
     },
     "OnePeopleLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
@@ -1469,10 +1329,16 @@
         }
       }
     },
-    "RimacDynamoDbTable": {
+    "DemoBucketUpload": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "reto-rimac-devserverlessprojectuploadbucket"
+      }
+    },
+    "MyDynamoDbTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TableName": "reto-rimac-dev",
+        "TableName": "abcde",
         "AttributeDefinitions": [
           {
             "AttributeName": "id",
@@ -1501,19 +1367,10 @@
         "Name": "sls-reto-rimac-dev-ServerlessDeploymentBucketName"
       }
     },
-    "HelloLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "HelloLambdaVersionnCxjtp2X7hox6YyCq5NHQGcXulFjuPLcEiGrK07U0"
-      },
-      "Export": {
-        "Name": "sls-reto-rimac-dev-HelloLambdaFunctionQualifiedArn"
-      }
-    },
     "OnePeopleLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "OnePeopleLambdaVersion9WeGdTq87OaCj9ItoByemVG9S7Tf45QfPT5mXBPo4"
+        "Ref": "OnePeopleLambdaVersion4y1ZE8rVkQELU4jtvt9rGHvziH3pIF8CY6kHjgiC8A"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-OnePeopleLambdaFunctionQualifiedArn"
@@ -1522,7 +1379,7 @@
     "AllPeopleLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AllPeopleLambdaVersionanqv0o28SppHOWEuRvKdaRsMxKzRYXC4d310tjvVUo"
+        "Ref": "AllPeopleLambdaVersion0faxIiejuv23Gz54cp0WRVBhnQnbtX9TgVGUtjsNR7g"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-AllPeopleLambdaFunctionQualifiedArn"
@@ -1531,7 +1388,7 @@
     "OneVehicleLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "OneVehicleLambdaVersionfzEIewVNcQDUy0fvUrzAaTaUvQpeaO8GpqcrC92xcQ"
+        "Ref": "OneVehicleLambdaVersionu7qDWevlsEmKLtK7LWG0lqLBlHfnv3XVJejMZOk"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-OneVehicleLambdaFunctionQualifiedArn"
@@ -1540,7 +1397,7 @@
     "AllVehiclesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AllVehiclesLambdaVersionBSmnaFNFCL853h6tACpHBRXijEd0FhB9ZM2ogGk8s8E"
+        "Ref": "AllVehiclesLambdaVersionsJfuF6bPVywlhZ2b9ShCNJm66wSMsPu0aykwmjft3k"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-AllVehiclesLambdaFunctionQualifiedArn"
@@ -1549,7 +1406,7 @@
     "PutClientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PutClientLambdaVersionrM7FpO8fBTXpXnwQT8Eqg72qqv3Cyj2yZgT2AYBcJs"
+        "Ref": "PutClientLambdaVersionmm8SKRVwzAbLrR4ZheXlfRIYjkBfIKO0kX1zYwNE8"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-PutClientLambdaFunctionQualifiedArn"
@@ -1558,7 +1415,7 @@
     "GetClientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetClientLambdaVersionIJwGOIDNXK9dtFeuSqquSzDz5z4SWYa3AKV05AYHs"
+        "Ref": "GetClientLambdaVersionKZvomgKsLv7sESXOiZCYbfkDnbdVBQSkHR7UHP7228U"
       },
       "Export": {
         "Name": "sls-reto-rimac-dev-GetClientLambdaFunctionQualifiedArn"

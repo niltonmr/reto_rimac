@@ -1,7 +1,7 @@
 module.exports = {
     tables: [
         {
-            TableName: process.env.CLIENT_TABLE,
+            TableName: 'reto-rimac-dev',
             KeySchema: [
                 {
                     AttributeName: 'ID',
